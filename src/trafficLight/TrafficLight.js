@@ -1,22 +1,18 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useRef } from "react";
+import IdleTimer from "react-idle-timer";
 import { connect } from "react-redux";
 import { changeLightColor, setInitialState } from "../actions";
 import "./TrafficLight.css";
 
 const TrafficLight = ({ signalStatus, changeLightColor }) => {
   const { color, index } = signalStatus;
-
+  console.log("Colour = ",color, "Index = ", index, "Current Signal" )
+  const idleTimerRef = useRef(null);
   const timer = {
-      0:2500,
-      1:1000,
-      2:2500,
+    0:5,
+    1:2,
+    2:5
   }
-
-  useEffect(() => {
-    console.log("hello");
-      setTimeout( ()=>{ changeLightColor(signalStatus) }, timer[index]);
-  },[signalStatus]);
-
   const RenderLight = () => {
     let lightDiv = [];
     let colour = "";
@@ -27,11 +23,21 @@ const TrafficLight = ({ signalStatus, changeLightColor }) => {
     return lightDiv;
   };
 
+  const userIsIdle = (signalState)=>{
+    console.log('idle timer')
+    changeLightColor(signalState);
+  }
+
   return (
     <Fragment>
       <div className="container">
         <RenderLight />
       </div>
+      <IdleTimer 
+        ref={idleTimerRef}
+        timeout={timer[index]*1000}
+        onIdle={()=>userIsIdle(signalStatus)}
+      />
       <button
         className="change-light"
         onClick={() => changeLightColor(signalStatus)}

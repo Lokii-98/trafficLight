@@ -8,6 +8,8 @@
   padding: 15px 0;
   height: 200px;
   width: 70px;
+  margin-right: auto;
+  margin-left: auto;
 }
 .circle {
   background-color: rgba(0, 0, 0, 0.3);
@@ -37,5 +39,18 @@
 .circle.green {
   background-color: #2ecc71;
   box-shadow: 0 0 20px 5px #2ecc71;
+}
+
+.change-light {
+  margin:10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color:burlywood;   
+  color: brown;
+}
+
+.change-light:hover{
+  background-color: chocolate;
+  color: black;
 }
 
